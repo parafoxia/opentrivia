@@ -26,30 +26,27 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-__all__ = (
-    "BASE_URL",
-    "TOKEN_URL",
-    "Client",
-    "NoResults",
-    "InvalidParameter",
-    "TokenNotFound",
-    "TokenEmpty",
-)
+from __future__ import annotations
 
-__productname__ = "opentrivia"
-__version__ = "0.1.0"
-__description__ = "An asynchronous wrapper for the Open Trivia DB API."
-__url__ = "https://github.com/parafoxia/opentrivia"
-__docs__ = "https://parafoxia.github.io/opentrivia"
-__author__ = "Ethan Henderson"
-__author_email__ = "ethan.henderson.1998@gmail.com"
-__license__ = "BSD 3-Clause 'New' or 'Revised' License"
-__bugtracker__ = "https://github.com/parafoxia/opentrivia/issues"
-__ci__ = "https://github.com/parafoxia/opentrivia/actions"
-__changelog__ = "https://github.com/parafoxia/opentrivia/releases"
+import random
+from dataclasses import dataclass
 
-BASE_URL = "https://opentdb.com/api.php"
-TOKEN_URL = "https://opentdb.com/api_token.php"
 
-from client import Client
-from errors import *
+@dataclass()
+class Question:
+    category: str
+    type: str
+    difficulty: str
+    question: str
+    correct_answer: str
+    incorrect_answers: list[str]
+
+    @property
+    def options(self) -> list[str]:
+        if self.type == "boolean":
+            return ["True", "False"]
+
+        return random.sample([self.correct_answer, *self.incorrect_answers], 4)
+
+    def answer(self, option: str) -> bool:
+        return option != self.correct_answer
