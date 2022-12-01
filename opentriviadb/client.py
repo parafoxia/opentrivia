@@ -26,7 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""Client interfaces for the OpenTrivia wrapper."""
+"""Client interfaces for the OpenTriviaDB wrapper."""
 
 from __future__ import annotations
 
@@ -39,9 +39,9 @@ from types import TracebackType
 
 from aiohttp import ClientSession
 
-from opentrivia import BASE_URL, TOKEN_URL
-from opentrivia.errors import InvalidParameter, NoResults, TokenEmpty, TokenNotFound
-from opentrivia.questions import Question
+from opentriviadb import BASE_URL, TOKEN_URL
+from opentriviadb.errors import InvalidParameter, NoResults, TokenEmpty, TokenNotFound
+from opentriviadb.questions import Question
 
 EXCEPTIONS: t.Final = [None, NoResults, InvalidParameter, TokenNotFound, TokenEmpty]
 
@@ -153,8 +153,9 @@ class Client:
         category : Category, optional
             The category of the questions that should be in the round.
             This should be passed as a `Category` enum, which can be
-            imported using `from opentrivia import Category`. If this is
-            not provided, the questions will be in a mix of categories.
+            imported using `from opentriviadb import Category`. If this
+            is not provided, the questions will be in a mix of
+            categories.
         difficulty : "easy" or "medium" or "hard", optional
             The difficulty of questions that should be in the round. If
             this is not provided, the questions can be of any
@@ -192,7 +193,7 @@ class Client:
 
         ??? example "Example with parameters"
             ```py
-            from opentrivia import Category
+            from opentriviadb import Category
 
             async for q in client.round(
                 amount=25,

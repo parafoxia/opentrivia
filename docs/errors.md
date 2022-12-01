@@ -1,3 +1,3 @@
 # errors
 
-::: opentrivia.errors
+::: opentriviadb.errors

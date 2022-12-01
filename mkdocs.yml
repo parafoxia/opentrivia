@@ -1,4 +1,4 @@
-site_name: OpenTrivia
+site_name: OpenTriviaDB
 
 plugins:
   - search
@@ -57,16 +57,16 @@ extra_css:
 extra:
   social:
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/opentrivia/
+      link: https://pypi.org/project/opentriviadb/
       name: PyPI
     - icon: fontawesome/brands/github
-      link: https://github.com/parafoxia/opentrivia
+      link: https://github.com/parafoxia/opentriviadb
       name: Source
 
 copyright: Copyright &copy; 2022-present Ethan Henderson
 
-repo_name: parafoxia/opentrivia
-repo_url: https://github.com/parafoxia/opentrivia
+repo_name: parafoxia/opentriviadb
+repo_url: https://github.com/parafoxia/opentriviadb
 
 nav:
   - "index.md"

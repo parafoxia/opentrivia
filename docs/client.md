@@ -1,3 +1,3 @@
 # client
 
-::: opentrivia.client
+::: opentriviadb.client

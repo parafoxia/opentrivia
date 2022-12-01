@@ -1,4 +1,4 @@
-graft opentrivia
+graft opentriviadb
 graft requirements
 include LICENSE
 include README.md

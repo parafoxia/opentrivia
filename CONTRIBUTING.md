@@ -1,16 +1,16 @@
 # Contributing
 
-Thanks for considering contributing to OpenTrivia! Before you begin, take a minute to read the below information.
+Thanks for considering contributing to OpenTriviaDB! Before you begin, take a minute to read the below information.
 
 ## Expectations
 
 * All code should follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) standards
-* All code should support the Python versions OpenTrivia already supported, unless there's a good reason otherwise
+* All code should support the Python versions OpenTriviaDB already supported, unless there's a good reason otherwise
 * Commit messages should be clear and easy to understand
 * Issue and PR descriptions should be much the same
 * New features and fixes should be properly tested before committing
 
-And of course, always follow the [code of conduct](https://github.com/parafoxia/opentrivia/blob/main/CODE_OF_CONDUCT.md).
+And of course, always follow the [code of conduct](https://github.com/parafoxia/opentriviadb/blob/main/CODE_OF_CONDUCT.md).
 
 ## First time contributing?
 

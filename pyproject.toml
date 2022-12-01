@@ -17,14 +17,14 @@ ignore_missing_imports = true
 exclude = "tests"
 
 [tool.len8]
-exclude = ["tests", "opentrivia/ux.py"]
+exclude = ["tests", "opentriviadb/ux.py"]
 code-length = 88
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 
 [tool.coverage.report]
-omit = ["opentrivia/__init__.py", "opentrivia/__main__.py", "opentrivia/ux.py"]
+omit = ["opentriviadb/__init__.py", "opentriviadb/__main__.py", "opentriviadb/ux.py"]
 exclude_lines = [
     "if t.TYPE_CHECKING:",
     "raise NotImplementedError",

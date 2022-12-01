@@ -1,3 +1,3 @@
 # questions
 
-::: opentrivia.questions
+::: opentriviadb.questions

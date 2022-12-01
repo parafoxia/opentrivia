@@ -15,7 +15,7 @@ jobs:
 
     - name: Check version
       run: |
-        [[ $(sed -rn 's/__version__ = "(.*)"/v\1/p' opentrivia/__init__.py) == ${{ github.event.release.tag_name }} ]]
+        [[ $(sed -rn 's/__version__ = "(.*)"/v\1/p' opentriviadb/__init__.py) == ${{ github.event.release.tag_name }} ]]
 
   build:
     name: Build package

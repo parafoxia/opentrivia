@@ -26,31 +26,49 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-__all__ = (
-    "BASE_URL",
-    "TOKEN_URL",
-    "Category",
-    "Client",
-    "NoResults",
-    "InvalidParameter",
-    "TokenNotFound",
-    "TokenEmpty",
-)
+"""OpenTriviaDB errors."""
 
-__productname__ = "opentrivia"
-__version__ = "0.1.0"
-__description__ = "An asynchronous wrapper for the Open Trivia DB API."
-__url__ = "https://github.com/parafoxia/opentrivia"
-__docs__ = "https://parafoxia.github.io/opentrivia"
-__author__ = "Ethan Henderson"
-__author_email__ = "ethan.henderson.1998@gmail.com"
-__license__ = "BSD 3-Clause 'New' or 'Revised' License"
-__bugtracker__ = "https://github.com/parafoxia/opentrivia/issues"
-__ci__ = "https://github.com/parafoxia/opentrivia/actions"
-__changelog__ = "https://github.com/parafoxia/opentrivia/releases"
+from __future__ import annotations
 
-BASE_URL = "https://opentdb.com/api.php"
-TOKEN_URL = "https://opentdb.com/api_token.php"  # nosec B105
 
-from client import Category, Client
-from errors import *
+class OpenTriviaError(Exception):
+    """The base error for OpenTriviaDB errors."""
+
+
+class NoResults(OpenTriviaError):
+    """Exception thrown when no results can be returned from the API."""
+
+    def __init__(self) -> None:
+        super().__init__("the API does not have enough questions for your query")
+
+
+class InvalidParameter(OpenTriviaError):
+    """An invalid parameter was passed to the API."""
+
+    def __init__(self) -> None:
+        super().__init__(
+            "an invalid parameter has been passed -- refer to the docs to "
+            "check valid values"
+        )
+
+
+class TokenNotFound(OpenTriviaError):
+    """A session token is required for the request, but does not
+    exist."""
+
+    def __init__(self) -> None:
+        super().__init__(
+            "session token does not exist -- use `client.retrieve_token` to "
+            "create a new one"
+        )
+
+
+class TokenEmpty(OpenTriviaError):
+    """All possible questions have been returned while the active
+    session token is in use, and the token should be reset."""
+
+    def __init__(self) -> None:
+        super().__init__(
+            "all possible questions returned using current token -- use "
+            "`client.reset_token` to reset it"
+        )
