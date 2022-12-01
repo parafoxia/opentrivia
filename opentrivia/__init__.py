@@ -29,6 +29,7 @@
 __all__ = (
     "BASE_URL",
     "TOKEN_URL",
+    "Category",
     "Client",
     "NoResults",
     "InvalidParameter",
@@ -51,5 +52,5 @@ __changelog__ = "https://github.com/parafoxia/opentrivia/releases"
 BASE_URL = "https://opentdb.com/api.php"
 TOKEN_URL = "https://opentdb.com/api_token.php"
 
-from client import Client
+from client import Category, Client
 from errors import *

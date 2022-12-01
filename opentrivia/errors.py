@@ -26,19 +26,25 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+"""OpenTrivia errors."""
+
 from __future__ import annotations
 
 
 class OpenTriviaError(Exception):
-    ...
+    """The base error for OpenTrivia errors."""
 
 
 class NoResults(OpenTriviaError):
+    """Exception thrown when no results can be returned from the API."""
+
     def __init__(self) -> None:
         super().__init__("the API does not have enough questions for your query")
 
 
 class InvalidParameter(OpenTriviaError):
+    """An invalid parameter was passed to the API."""
+
     def __init__(self) -> None:
         super().__init__(
             "an invalid parameter has been passed -- refer to the docs to check valid values"
@@ -46,6 +52,9 @@ class InvalidParameter(OpenTriviaError):
 
 
 class TokenNotFound(OpenTriviaError):
+    """A session token is required for the request, but does not
+    exist."""
+
     def __init__(self) -> None:
         super().__init__(
             "session token does not exist -- use `client.retrieve_token` to create a new one"
@@ -53,6 +62,9 @@ class TokenNotFound(OpenTriviaError):
 
 
 class TokenEmpty(OpenTriviaError):
+    """All possible questions have been returned while the active
+    session token is in use, and the token should be reset."""
+
     def __init__(self) -> None:
         super().__init__(
             "all possible questions returned using current token -- use `client.reset_token` to reset it"

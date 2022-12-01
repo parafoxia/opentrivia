@@ -26,6 +26,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+"""Client interfaces for the OpenTrivia wrapper."""
+
 from __future__ import annotations
 
 import asyncio
@@ -72,6 +74,37 @@ class Category(enum.Enum):
 
 
 class Client:
+    """A client for the Open Trivia API.
+
+    Parameters
+    ----------
+    token : str, optional
+        Your session token. This is not an access token in the
+        traditional sense (and is thus optional), but a token generated
+        by the API in order to track which questions you have received.
+        This is done to prevent duplicate questions.
+
+    Other Parameters
+    ----------------
+    loop : AbstractEventLoop, optional
+        The event loop the client should use. If you don't provide one,
+        the client will create one.
+    session : ClientSession, optional
+        The AIOHTTP session the client should use. If you don't provide
+        one, the client will create one.
+
+    ??? example "Basic example"
+        ```py
+        client = Client()
+        ```
+
+    ??? example "Context manager example"
+        ```py
+        async with Client() as client:
+            ...
+        ```
+    """
+
     def __init__(
         self,
         token: str | None = None,
@@ -110,6 +143,67 @@ class Client:
         difficulty: t.Literal["easy", "medium", "hard"] | None = None,
         type: t.Literal["multiple", "boolean"] | None = None,
     ) -> t.AsyncIterator[Question]:
+        """Run a round of trivia.
+
+        Parameters
+        ----------
+        amount : int, optional
+            The number of questions the round should contain. This
+            cannot be higher than 50, and defaults to 10.
+        category : Category, optional
+            The category of the questions that should be in the round.
+            This should be passed as a `Category` enum, which can be
+            imported using `from opentrivia import Category`. If this is
+            not provided, the questions will be in a mix of categories.
+        difficulty : "easy" or "medium" or "hard", optional
+            The difficulty of questions that should be in the round. If
+            this is not provided, the questions can be of any
+            difficulty.
+        type : "multiple" or "boolean", optional
+            The type of questions that should be in the round. This can
+            either be multiple choice ("multiple") or true-false
+            ("boolean"). If this is not provided, the questions can be
+            either.
+
+        Yields
+        ------
+        Question
+            Asynchronously yield questions one by one.
+
+        Raises
+        ------
+        NoResults
+            The API does not have enough questions to satisfy your
+            query.
+        InvalidParameter
+            An invalid parameter has been passed.
+        TokenNotFound
+            Session token does not exist (session tokens are not
+            required to make requests).
+        TokenEmpty
+            The session token needs to be reset (use
+            `client.reset_token` to do this).
+
+        ??? example "Basic example"
+            ```py
+            async for q in client.round():
+                print(q.question)
+            ```
+
+        ??? example "Example with parameters"
+            ```py
+            from opentrivia import Category
+
+            async for q in client.round(
+                amount=25,
+                category=Category.GENERAL_KNOWLEDGE,
+                difficulty="easy",
+                type="multiple",
+            ):
+                print(q.question)
+            ```
+        """
+
         url = (
             BASE_URL
             + f"?amount={amount}"
@@ -140,18 +234,54 @@ class Client:
                 [b64decode(i).decode("utf-8") for i in result["incorrect_answers"]],
             )
 
-    async def retrieve_token(self) -> None:
+    async def retrieve_token(self) -> str:
+        """Retrieve a session token from the API.
+
+        While the token is returned from this method, you don't need to
+        do anything extra to allow the client to use the token.
+
+        Returns
+        -------
+        str
+            The session token. This is automatically applied to the
+            client, but is returned to allow you to store it for future
+            use.
+        """
+
         async with self._session.get(TOKEN_URL + "?command=request") as resp:
             resp.raise_for_status()
             data = await resp.json()
 
         self.token = data["token"]
+        return t.cast(str, self.token)
 
     async def reset_token(self) -> None:
+        """Reset a session token.
+
+        This resets the token currently applied to the client. This does
+        not error if no token currently exists, but instead silently
+        does nothing.
+
+        Returns
+        -------
+        None
+        """
+
         async with self._session.get(
             TOKEN_URL + f"?command=reset&token={self.token}"
         ) as resp:
             resp.raise_for_status()
 
     async def teardown(self) -> None:
+        """Close the AIOHTTP session.
+
+        This should be called before closing your program. If you use
+        the client via the context manager, this is called
+        automatically.
+
+        Returns
+        -------
+        None
+        """
+
         await self._session.close()

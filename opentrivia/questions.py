@@ -26,6 +26,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+"""Questions interfaces for the OpenTrivia wrapper."""
+
 from __future__ import annotations
 
 import random
@@ -34,6 +36,24 @@ from dataclasses import dataclass
 
 @dataclass()
 class Question:
+    """A question.
+
+    Attributes
+    ----------
+    category : str
+        The question category.
+    type : str
+        The question type.
+    difficulty : str
+        The question difficulty.
+    question : str
+        The question body.
+    correct_answer : str
+        The question's correct answer.
+    incorrect_answers : list of str
+        A list of the question's incorrect answers.
+    """
+
     category: str
     type: str
     difficulty: str
@@ -43,10 +63,30 @@ class Question:
 
     @property
     def options(self) -> list[str]:
+        """All the question options shuffled in a random order.
+
+        Returns
+        -------
+        list of str
+        """
+
         if self.type == "boolean":
             return ["True", "False"]
 
         return random.sample([self.correct_answer, *self.incorrect_answers], 4)
 
     def answer(self, option: str) -> bool:
+        """Answer the question, and check if it is correct.
+
+        Parameters
+        ----------
+        option : str
+            The option with which you wish to answer the question.
+
+        Returns
+        -------
+        bool
+            Whether you answered the question correctly.
+        """
+
         return option != self.correct_answer

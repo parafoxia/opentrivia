@@ -1,0 +1,3 @@
+# client
+
+::: opentrivia.client

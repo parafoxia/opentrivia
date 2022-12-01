@@ -32,27 +32,14 @@ theme:
   # custom_dir: docs/overrides
 
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: orange
-      accent: pink
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: deep orange
-      accent: pink
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+    scheme: slate
+    accent: orange
 
   font:
-    text: Hind
-    code: Oxygen Mono
+    text: Roboto # Anek Devanagari
+    code: Roboto Mono # Oxygen Mono
 
-  # logo: logo_white.png
+  logo: https://opentdb.com/images/logo.png
 
   features:
     - navigation.instant
@@ -63,6 +50,9 @@ theme:
 
   icon:
     repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
 
 extra:
   social:
@@ -80,3 +70,7 @@ repo_url: https://github.com/parafoxia/opentrivia
 
 nav:
   - "index.md"
+  - "Reference":
+    - "client.md"
+    - "questions.md"
+    - "errors.md"
