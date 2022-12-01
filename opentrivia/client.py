@@ -234,8 +234,8 @@ class Client:
                 [b64decode(i).decode("utf-8") for i in result["incorrect_answers"]],
             )
 
-    async def retrieve_token(self) -> str:
-        """Retrieve a session token from the API.
+    async def request_token(self) -> str:
+        """Request a session token from the API.
 
         While the token is returned from this method, you don't need to
         do anything extra to allow the client to use the token.
