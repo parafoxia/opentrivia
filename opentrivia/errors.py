@@ -47,7 +47,8 @@ class InvalidParameter(OpenTriviaError):
 
     def __init__(self) -> None:
         super().__init__(
-            "an invalid parameter has been passed -- refer to the docs to check valid values"
+            "an invalid parameter has been passed -- refer to the docs to "
+            "check valid values"
         )
 
 
@@ -57,7 +58,8 @@ class TokenNotFound(OpenTriviaError):
 
     def __init__(self) -> None:
         super().__init__(
-            "session token does not exist -- use `client.retrieve_token` to create a new one"
+            "session token does not exist -- use `client.retrieve_token` to "
+            "create a new one"
         )
 
 
@@ -67,5 +69,6 @@ class TokenEmpty(OpenTriviaError):
 
     def __init__(self) -> None:
         super().__init__(
-            "all possible questions returned using current token -- use `client.reset_token` to reset it"
+            "all possible questions returned using current token -- use "
+            "`client.reset_token` to reset it"
         )

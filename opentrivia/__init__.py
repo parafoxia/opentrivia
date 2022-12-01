@@ -50,7 +50,7 @@ __ci__ = "https://github.com/parafoxia/opentrivia/actions"
 __changelog__ = "https://github.com/parafoxia/opentrivia/releases"
 
 BASE_URL = "https://opentdb.com/api.php"
-TOKEN_URL = "https://opentdb.com/api_token.php"
+TOKEN_URL = "https://opentdb.com/api_token.php"  # nosec B105
 
 from client import Category, Client
 from errors import *
